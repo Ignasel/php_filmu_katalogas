@@ -23,7 +23,7 @@ try{
         <th>Režisierius</th>
         <th>Filmo IMDB įvertinimas</th>
         <th>Filmo žanras</th>
-        <th><Aprašymas></Aprašymas></th>
+        <th>Aprašymas</th>
     </tr>
     <tr>
         <?php
@@ -38,6 +38,8 @@ try{
     <td><?=$filmas['imdb'];?></td>
     <td><?=$filmas['genre_name'];?></td>
     <td><?=$filmas['aprasymas'];?></td>
+    <td><a href="?page=update_film&id=<?=$filmas['movies_id']?>">Redaguoti</a></td>
+        <td><a href="?page=delete_film&id=<?=$filmas['movies_id']?>">Šalinti</a></td>
     </tr>
     <?php endforeach;?>
 </table>

@@ -5,7 +5,7 @@ if (isset($_POST['submit'])){
     try {
         if ($conn){
             $sql = "INSERT INTO filmai (pavadinimas, metai, rezisierius, imdb, zanrai_id, aprasymas)
-VALUES (:pavadinimas, :metai, :rezisierius, :imdb, :zanrai_id, :aprasymas)";
+              VALUES (:pavadinimas, :metai, :rezisierius, :imdb, :zanrai_id, :aprasymas)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':pavadinimas', $_POST['movie_title'], PDO::PARAM_STR);
             $stmt->bindParam(':metai', $_POST['movie_date'], PDO::PARAM_STR);

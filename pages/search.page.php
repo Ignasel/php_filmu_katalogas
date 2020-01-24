@@ -18,9 +18,13 @@ try{
 <form method="post">
     <div class="form-group">
         <label for="exampleInputEmail1">Įveskite filmo pavadinimą</label>
-        <input type="text" class="form-control" id="searchByTitle"  placeholder="Filmo pavadinimas" name="titleForSearch">
+        <input type="text" class="form-control" list="searchByTitle"  placeholder="Filmo pavadinimas" name="titleForSearch">
+        <datalist id="searchByTitle">
+            <?php foreach ($filmai as $filmas):?>
+                <option value="<?=$filmas['pavadinimas'];?>"></option>
+            <?php endforeach;?>
+        </datalist>
     </div>
-
     <button type="submit" class="btn btn-primary" name="searchForIT">Submit</button>
 </form>
 
