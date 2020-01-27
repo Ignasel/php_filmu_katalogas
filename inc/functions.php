@@ -1,4 +1,6 @@
 <?php
+$conn = connectDB();
+
 function connectDB(){
     global $host, $db, $username, $password, $options;
     $dsn= "mysql:host=$host; dbname=$db";
@@ -19,15 +21,15 @@ function connectDB(){
                 if ($conn) {
                     $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
                                         filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        ORDER BY movies_id");
+                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id");
                     $filmai = $stmt->fetchAll();
-                    $conn = 0;
                 }
-            }catch (PDOException $e){
+            }catch (PDOException $e) {
                 echo $e->getMessage();
             exit;}
-            return ($filmai);
+
+
+            return $filmai;
 
         }
     function allGenres()
@@ -132,6 +134,23 @@ function DeleteGenre($thisId){
         exit;
     }
 }
+
+function allUsers()
+    {
+        $conn = connectDB();
+        try {
+            if ($conn) {
+                if($conn){
+                    $stmt = $conn->query("SELECT * FROM users");
+                    $users = $stmt->fetchAll();
+                }
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        return $users;
+    }
 
 
 

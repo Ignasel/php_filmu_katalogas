@@ -2,6 +2,7 @@
 <?php
     connectDB();
    $filmai = allMovies();
+   var_dump($filmai)
 ?>
 <table class="table table-bordered">
     <tr>
@@ -13,11 +14,8 @@
         <th>Filmo žanras</th>
         <th>Aprašymas</th>
     </tr>
-    <tr>
         <?php
         foreach ($filmai as $filmas):?>
-    </tr>
-
     <tr>
         <td><?=$filmas['movies_id'];?></td>
         <td><?=$filmas['pavadinimas'];?></td>
