@@ -1,20 +1,8 @@
 <h2>Visi filmai</h2>
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
-        $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
-                                        filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        ORDER BY movies_id");
-        $filmai = $stmt->fetchAll();
-
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-}?>
+    connectDB();
+   $filmai = allMovies();
+?>
 <table class="table table-bordered">
     <tr>
         <th>Filmo ID</th>
@@ -38,8 +26,6 @@ try{
     <td><?=$filmas['imdb'];?></td>
     <td><?=$filmas['genre_name'];?></td>
     <td><?=$filmas['aprasymas'];?></td>
-    <td><a href="?page=update_film&id=<?=$filmas['movies_id']?>">Redaguoti</a></td>
-        <td><a href="?page=delete_film&id=<?=$filmas['movies_id']?>">Šalinti</a></td>
     </tr>
     <?php endforeach;?>
 </table>

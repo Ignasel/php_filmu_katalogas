@@ -1,38 +1,21 @@
 <h2>Filmai pagal žanrą</h2>
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
-        $stmt = $conn->query("SELECT pavadinimas, id FROM zanrai");
-        $zanrai = $stmt->fetchAll();
-
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-}?>
+    connectDB();
+   $zanrai = allGenres();
+if (isset($_GET['id'])) {
+    $value = $_GET['id'];
+    $films_by_genre = moviesByGenre($value);
+}
+?>
 
 <ul>
 <?php
-
 foreach ($zanrai as $zanras):?>
         <li>
         <a href="?page=zanrai&id=<?=$zanras['id']?>"><?=$zanras['pavadinimas']?></a>
         </li>
 <?php endforeach;?>
 </ul>
-
-<?php
-if (isset($_GET['id'])){
-            $value=$_GET['id'];
-            $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
-                                        filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        WHERE zanrai_id = $value ");
-        $films_by_genre = $stmt->fetchAll();
-
-}?>
 
 
 <?php if (isset($_GET['id'])) :?>

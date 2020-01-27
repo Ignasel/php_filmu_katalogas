@@ -1,34 +1,12 @@
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
+connectDB();
         $thisId = $_GET['id'];
-        $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
-                                        filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        WHERE filmai.id=$thisId");
-        $filmai = $stmt->fetchAll();
-
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-}?>
-
-
-
-<?php
-$validation_errors=[];
+        $filmai = MoviebyId($thisId);
 if (isset($_POST['submit'])) {
-    $stmt = $conn->query("DELETE FROM filmai WHERE id=$thisId");
+    DeleteFilm($thisId);
     header('Location:/Igno2/?page=visi');
 }
-
 ?>
-
-
-
 
 
 <h3>Ar tikrai norite ištrinti šį filmą?</h3>

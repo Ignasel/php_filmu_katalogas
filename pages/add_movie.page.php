@@ -1,7 +1,26 @@
 <?php
 $dsn= "mysql:host=$host; dbname=$db";
 $conn = new PDO($dsn, $username, $password, $options);
-if (isset($_POST['submit'])){
+
+
+$validation_errors=[];
+if (isset($_POST['submit'])) {
+    if (!preg_match('/\w{1,45}$/',
+        trim(htmlspecialchars($_POST['movie_title'])))) {
+        $validation_errors[] = "Vedant filmo pavadinimą, negalima vesti specialiuju simboliu.";
+    }if (!preg_match('/\w{1,45}$/',
+        trim(htmlspecialchars($_POST['director'])))) {
+        $validation_errors[] = "Įveskite tik režisieriaus vardą ir pavardę";
+    }
+    if (!preg_match('/\w{1,200}$/',
+        trim(htmlspecialchars($_POST['about'])))) {
+        $validation_errors[] = "Galite įvesti tik raides ir skaičius, jokių papildomų specialiųjų simbolių";
+    }
+}
+?>
+
+<?php
+if (isset($_POST['submit']) && !$validation_errors){
     try {
         if ($conn){
             $sql = "INSERT INTO filmai (pavadinimas, metai, rezisierius, imdb, zanrai_id, aprasymas)
@@ -17,7 +36,6 @@ if (isset($_POST['submit'])){
             header('Location:/Igno2/?page=visi');
         }
     } catch (PDOException $e) {
-
         echo $e->getMessage();
     }
 }
@@ -79,24 +97,6 @@ if (isset($_POST['submit'])){
 
     <button type="submit" class="btn btn-primary" name="submit">Submit</button>
 </form>
-
-
-
-
-
-<?php
-
-$validation_errors=[];
-if (isset($_POST['submit'])) {
-    if (!preg_match('/\w{1,45}$/',
-        trim(htmlspecialchars($_POST['movie_title'])))) {
-        $validation_errors[] = "Vedant filmo pavadinimą, negalima vesti specialiuju simboliu.";
-    }if (!preg_match('/\w{1,45}$/',
-        trim(htmlspecialchars($_POST['director'])))) {
-        $validation_errors[] = "Įveskite tik režisieriaus vardą ir pavardę";
-    }
-}
-?>
 
 
 

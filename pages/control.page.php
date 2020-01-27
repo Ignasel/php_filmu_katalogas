@@ -15,9 +15,18 @@ try{
 
     echo $e->getMessage();
 }?>
-<form>
+
+<?php
+    if (isset($_POST['submit'])){
+        header('Location:/Igno2/?page=add_movies');
+    }
+
+?>
+<form method="post">
 <button type="submit" class="btn btn-primary" name="submit">pridėti naują filmą</button>
 </form>
+
+
 
 
 <table class="table table-bordered">

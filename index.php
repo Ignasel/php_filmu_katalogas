@@ -10,6 +10,7 @@ require 'inc/config.php';
 require 'inc/links.php';
 require 'inc/nav.php';
 require 'inc/db.php';
+require_once 'inc/functions.php';
 require_once 'templates/main/index.view.php';
 
 
