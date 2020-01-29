@@ -1,4 +1,6 @@
-<h2>Žanrų valdymas</h2>
+<?php
+session_start();
+if($_SESSION['username'] == "admin"):?>
 <?php
 connectDB();
 $zanrai = allGenres();
@@ -13,7 +15,7 @@ $zanrai = allGenres();
 
 
 
-
+<h2>Žanrų valdymas</h2>
 <form method="post">
     <button type="submit" class="btn btn-primary" name="submit">pridėti naują žanrą</button>
 </form>
@@ -33,3 +35,4 @@ $zanrai = allGenres();
     </tr>
     <?php endforeach;?>
 </table>
+<?php endif;?>

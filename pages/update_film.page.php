@@ -1,25 +1,10 @@
-<h2>Filmo redagavimas</h2>
+<?php session_start();
+if($_SESSION['username'] == "admin"):?>
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
-    $thisId = $_GET['id'];
+$thisId = $_GET['id'];
+$filmai = MoviebyId($thisId);
 
-        $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
-                                        filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        WHERE filmai.id=$thisId");
-        $filmai = $stmt->fetch();
 
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-
-}?>
-
-<?php
 $validation_errors=[];
 if (isset($_POST['submit'])) {
     if (!preg_match('/\w{1,45}$/',
@@ -29,29 +14,18 @@ if (isset($_POST['submit'])) {
         trim(htmlspecialchars($_POST['director'])))) {
         $validation_errors[] = "Įveskite tik režisieriaus vardą ir pavardę";
     }
-$sql ="UPDATE filmai
-          SET pavadinimas = :pavadinimas, metai=:metai, rezisierius = :rezisierius, imdb=:imdb, zanrai_id = :zanrai_id,
-          aprasymas = :aprasymas
-           WHERE filmai.id=:id";
 
-$stmt = $conn->prepare($sql);
-$stmt ->bindParam(':pavadinimas', $_POST['movie_title'], PDO::PARAM_STR);
-$stmt ->bindParam(':rezisierius', $_POST['director'], PDO::PARAM_STR);
-$stmt ->bindParam(':metai', $_POST['movie_date'], PDO::PARAM_STR);
-$stmt ->bindParam(':imdb', $_POST['movie_rating'], PDO::PARAM_STR);
-$stmt ->bindParam(':zanrai_id', $_POST['genres_id'], PDO::PARAM_STR);
-$stmt ->bindParam(':aprasymas', $_POST['about'], PDO::PARAM_STR);
-$stmt ->bindParam(':id', $thisId, PDO::PARAM_STR);
-$stmt ->execute();
+    updateMovie($_POST['movie_title'], $_POST['director'], $_POST['movie_date'], $_POST['movie_rating'],$_POST['genres_id'],
+    $_POST['about'], $thisId);
 
 }
 ?>
 
-
+<h2>Filmo redagavimas</h2>
 <form method="post">
     <div class="form-group">
         <label for="Movie_name">Pavadinimas</label>
-        <input type="text" class="form-control" id="pavadinimas" value="<?=$filmai['pavadinimas']?>" name="movie_title">
+        <input type="text" class="form-control" id="pavadinimas" value="<?=$filmai["pavadinimas"]?>" name="movie_title">
     </div>
     <div class="form-group">
         <label for="director">Director</label>
@@ -80,7 +54,7 @@ $stmt ->execute();
     <div class="form-group">
         <label for="about">Pasirinkite žanrą</label>
         <select class="form-control form-control-sm" name="genres_id">
-            <option><?=$filmai['genre_name']?></option >
+            <option value="<?=$filmai['id']?>"><?=$filmai['genre_name']?></option >
           <?php
             $stmt = $conn->query("SELECT * FROM zanrai");
             $zanrai = $stmt->fetchAll();
@@ -108,6 +82,6 @@ $stmt ->execute();
         </ul>
     </div>
 <?php endif; ?>
-
+<?php endif;?>
 
 

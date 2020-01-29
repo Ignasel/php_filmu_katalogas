@@ -1,16 +1,18 @@
 <?php session_start();
 connectDB();
-$users = allUsers();
 if (isset($_POST['submit'])){
-    foreach ($users as $user)
-    if($_POST['userName'] == $user['users'] && $_POST['password'] == $user['password']){
-        $_SESSION['username'] = 'admin';
+    $username = $_POST['userName'];
+
+    $trans = allUsers($username);
+
+    if($_POST['userName'] == $trans['users'] && $_POST['password'] == $trans['password']){
+        $_SESSION['username'] = "admin";
         header('Location:/Igno2/?page=filmu-valdymas');
     } else{
         echo "Neteisingi prisijungimo duomenys";
     }
 }
-session_destroy()
+
 ?>
 
 <form method="post">

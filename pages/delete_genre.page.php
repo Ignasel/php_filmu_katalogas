@@ -7,7 +7,6 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-
 <h3>Ar tikrai norite ištrinti šį žanrą?</h3>
 <table class="table table-bordered">
     <tr>

@@ -2,7 +2,6 @@
 <?php
     connectDB();
    $filmai = allMovies();
-   var_dump($filmai)
 ?>
 <table class="table table-bordered">
     <tr>

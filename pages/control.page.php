@@ -1,22 +1,7 @@
 <h2>Valdyti filmus</h2>
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
-        $stmt = $conn->query("SELECT filmai.id as movies_id, filmai.pavadinimas, filmai.metai, filmai.rezisierius, filmai.imdb,
-                                        filmai.aprasymas, filmai.zanrai_id, zanrai.id, zanrai.pavadinimas as genre_name FROM filmai
-                                        INNER JOIN  zanrai ON filmai.zanrai_id=zanrai.id
-                                        ORDER BY movies_id");
-        $filmai = $stmt->fetchAll();
+$filmai = controlMovies();
 
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-}?>
-
-<?php
     if (isset($_POST['submit'])){
         header('Location:/Igno2/?page=add_movies');
     }

@@ -1,18 +1,8 @@
 <h2>Filmo paieškos laukelis </h2>
 
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-try{
-    $conn = new PDO($dsn, $username, $password);
-    if($conn){
-        $stmt = $conn->query("SELECT * FROM filmai");
-        $filmai = $stmt->fetchAll();
-
-    }
-}catch (PDOException $e){
-
-    echo $e->getMessage();
-}?>
+allMovies()
+?>
 
 
 <form method="post">
@@ -34,11 +24,7 @@ try{
 
 <?php
 $searchIT = $_POST['titleForSearch'];
-        $uzklausa = $conn->query ("SELECT id, pavadinimas, metai, rezisierius, imdb,
-                                        aprasymas FROM filmai
-                                        WHERE pavadinimas like '%$searchIT%'");
-        $filmams = $uzklausa->fetchAll();
-        $uzklausa->bindValue(1, "%$searchIT%", PDO::PARAM_STR); // Ką reiškia ši eilutė?
+$filmams = movieSearch($searchIT);
 
 ?>
 

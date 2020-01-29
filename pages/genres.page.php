@@ -1,6 +1,5 @@
 <h2>Filmai pagal žanrą</h2>
 <?php
-    connectDB();
    $zanrai = allGenres();
 if (isset($_GET['id'])) {
     $value = $_GET['id'];

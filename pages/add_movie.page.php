@@ -1,7 +1,5 @@
 <?php
-$dsn= "mysql:host=$host; dbname=$db";
-$conn = new PDO($dsn, $username, $password, $options);
-
+connectDB();
 
 $validation_errors=[];
 if (isset($_POST['submit'])) {
@@ -21,24 +19,9 @@ if (isset($_POST['submit'])) {
 
 <?php
 if (isset($_POST['submit']) && !$validation_errors){
-    try {
-        if ($conn){
-            $sql = "INSERT INTO filmai (pavadinimas, metai, rezisierius, imdb, zanrai_id, aprasymas)
-              VALUES (:pavadinimas, :metai, :rezisierius, :imdb, :zanrai_id, :aprasymas)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':pavadinimas', $_POST['movie_title'], PDO::PARAM_STR);
-            $stmt->bindParam(':metai', $_POST['movie_date'], PDO::PARAM_STR);
-            $stmt->bindParam(':rezisierius', $_POST['director'], PDO::PARAM_STR);
-            $stmt->bindParam(':imdb', $_POST['movie_rating'], PDO::PARAM_STR);
-            $stmt->bindParam(':zanrai_id', $_POST['genres_id'], PDO::PARAM_STR);
-            $stmt->bindParam(':aprasymas', $_POST['about'], PDO::PARAM_STR);
-            $stmt->execute();
-            header('Location:/Igno2/?page=visi');
-        }
-    } catch (PDOException $e) {
-        echo $e->getMessage();
+    addMovie();
+
     }
-}
 ?>
 
 <h2>Filmo pridėjimas</h2>
@@ -72,16 +55,7 @@ if (isset($_POST['submit']) && !$validation_errors){
     </div>
     <div class="form-group">
         <?php
-        $dsn= "mysql:host=$host; dbname=$db";
-        try{
-            $conn = new PDO($dsn, $username, $password, $options);
-            if($conn){
-                $stmt = $conn->query("SELECT * FROM zanrai");
-                $zanrai = $stmt->fetchAll();
-            }
-        }catch (PDOException $e){
-            echo $e->getMessage();
-        }?>
+        $zanrai = allGenres()?>
         <label for="about">Pasirinkite žanrą</label>
         <select class="form-control form-control-sm" name="genres_id">
         <?php
