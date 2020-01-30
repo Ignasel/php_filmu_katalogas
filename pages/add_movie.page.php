@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
 <?php
 if (isset($_POST['submit']) && !$validation_errors){
     addMovie();
-
     }
 ?>
 

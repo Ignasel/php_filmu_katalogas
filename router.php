@@ -37,6 +37,9 @@ if (isset($_GET['page'])) {
         case 'login':
             include('pages/login.page.php');
             break;
+        case 'logout':
+            include('pages/logout.page.php');
+            break;
         default:
     }
 }else{

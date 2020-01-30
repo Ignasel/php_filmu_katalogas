@@ -243,11 +243,11 @@ function allUsers($input)
     $conn = connectDB();
     try {
         if($conn){
-            $stmt = $conn->prepare("SELECT * FROM users
-                                            WHERE username LIKE ?");
-            $stmt->bindValue(1, "%input%", PDO::PARAM_STR);
+            $stmt = $conn->prepare("SELECT * FROM useriai
+                                            WHERE users LIKE ?");
+            $stmt->bindValue(1, "%$input%", PDO::PARAM_STR);
             $stmt->execute();
-            $users = $stmt->fetchAll();
+            $users = $stmt->fetch();
         }
     } catch (PDOException $e) {
         echo $e->getMessage();

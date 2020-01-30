@@ -1,11 +1,12 @@
 <?php session_start();
 connectDB();
 if (isset($_POST['submit'])){
-    $username = $_POST['userName'];
+    $userName = $_POST['username'];
+    $trans = allUsers($userName);
+    var_dump($trans);
 
-    $trans = allUsers($username);
 
-    if($_POST['userName'] == $trans['users'] && $_POST['password'] == $trans['password']){
+    if($_POST['username'] == $trans['users'] && $_POST['password'] == $trans['password']){
         $_SESSION['username'] = "admin";
         header('Location:/Igno2/?page=filmu-valdymas');
     } else{
@@ -18,7 +19,7 @@ if (isset($_POST['submit'])){
 <form method="post">
     <div class="form-group">
         <label for="exampleInputEmail1">Vartotojo vardas</label>
-        <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Vartotojo vardas" name="userName">
+        <input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Vartotojo vardas" name="username">
     </div>
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>

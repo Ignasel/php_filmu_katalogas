@@ -4,10 +4,7 @@ if($_SESSION['username'] == "admin"):?>
 <?php
 connectDB();
 $zanrai = allGenres();
-?>
 
-
-<?php
     if (isset($_POST['submit'])){
         header('Location:/Igno2/?page=add_genre');
     }
@@ -35,4 +32,8 @@ $zanrai = allGenres();
     </tr>
     <?php endforeach;?>
 </table>
+
+<?php else:?>
+    <?php header('Location:/Igno2/?page=login')
+    ?>
 <?php endif;?>

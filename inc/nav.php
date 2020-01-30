@@ -18,7 +18,8 @@ $navigation = [
         'Dropdown' => [
             'filmu-valdymas' => 'Filmu valdymas',
             'zanru-valdymas' => 'Žanrų valdymas',
-            'login' => 'login'
+            'login' => 'login',
+            'logout' => 'logout'
         ]
     ]
 ];

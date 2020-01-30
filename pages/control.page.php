@@ -1,4 +1,6 @@
-<h2>Valdyti filmus</h2>
+<?php
+session_start();
+if($_SESSION['username'] == "admin"):?>
 <?php
 $filmai = controlMovies();
 
@@ -7,11 +9,10 @@ $filmai = controlMovies();
     }
 
 ?>
+<h2>Valdyti filmus</h2>
 <form method="post">
 <button type="submit" class="btn btn-primary" name="submit">pridėti naują filmą</button>
 </form>
-
-
 
 
 <table class="table table-bordered">
@@ -42,3 +43,8 @@ $filmai = controlMovies();
     </tr>
     <?php endforeach;?>
 </table>
+
+<?php else:?>
+   <?php header('Location:/Igno2/?page=login')
+    ?>
+<?php endif;?>
